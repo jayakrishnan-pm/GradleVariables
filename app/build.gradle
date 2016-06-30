@@ -1,0 +1,70 @@
+apply plugin: 'com.android.application'
+
+
+
+
+android {
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
+
+    def versionCodeValue = 1;
+    def versionCodeNameValue = "1.0";
+
+
+    ext.getMyVersionCodeValue = {
+        return versionCodeValue;
+    }
+
+    ext.getMyVersionCodeNameValue = {
+        return versionCodeNameValue;
+    }
+
+
+
+    defaultConfig {
+        applicationId "gradlevars.devdeeds.com.gradlevariables"
+        minSdkVersion 16
+        targetSdkVersion 23
+        versionCode versionCodeValue
+        versionName versionCodeNameValue
+    }
+
+
+
+    buildTypes {
+
+        debug {
+            buildConfigField "String", "API_KEY", "\"hkjdbfkujfdbkbfsd\""
+            buildConfigField "String", "API_URL", '\"http://api.example.com/dev\"'
+            buildConfigField "boolean", "LOG", "true"
+        }
+
+        release {
+            buildConfigField "String", "API_KEY", "\"dfskdhfskdskfsdk\""
+            buildConfigField "String", "API_URL", '\"http://api.example.com/live\"'
+            buildConfigField "boolean", "LOG", "false"
+
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    assembleDebug << {
+        getMyVersionCodeValue()
+        getMyVersionCodeNameValue()
+    }
+
+    assembleRelease << {
+        getMyVersionCodeValue()
+        getMyVersionCodeNameValue()
+    }
+
+
+}
+
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.android.support:appcompat-v7:23.2.0'
+}
